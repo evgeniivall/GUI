@@ -4,7 +4,7 @@
 #include <unistd.h>
 
 
-GUI::GUI(int size, std::string* names, void (*func[])(), std::string head)
+GUI::GUI(int size, std::string* names, void (*func[])(), std::string head, color Col)
 {
     count = size;
     array = new options[count];
@@ -16,6 +16,7 @@ GUI::GUI(int size, std::string* names, void (*func[])(), std::string head)
     position = 0;
     positionColor = new int[count];
     Header = head;
+    defCol = Col;
 }
 
 std::string GUI::output(std::string text, int type, int color, int bg)
@@ -64,7 +65,7 @@ void GUI::Show()
     {
         positionColor[i] = 0;
     }
-    positionColor[position] = 31;
+    positionColor[position] = defCol;
     for (int i = 0; i < count; i++)
     {
         std::cout << output(array[i].name, 0, positionColor[i], 0);

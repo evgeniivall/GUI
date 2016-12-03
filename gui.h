@@ -1,19 +1,28 @@
 #ifndef GUI_H
 #define GUI_H
+
 #include <iostream>
+enum color
+{
+    red = 31,
+    green = 33,
+};
+
 class GUI
 {
 public:
 
 
    GUI();
-   GUI(int size, std::string* names, void (*func[])(), std::string head);
-    void func();
-    ~GUI()
-    {
+   GUI(int size, std::string* names, void (*func[])(), std::string head, color Col = red);
+   void func();
+
+
+   ~GUI()
+   {
         delete [] array;
         delete [] positionColor;
-    }
+   }
 
 private:
     struct options
@@ -21,6 +30,7 @@ private:
         void (*p)();
         std::string name;
     };
+    int defCol;
     bool ifEnter = 0;
     options* array;
     int count;

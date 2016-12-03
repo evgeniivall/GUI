@@ -42,7 +42,7 @@ int main()
 
     std::string n[4] = {"Call A", "Call B", "Next menu","Exit"};
     void (*select[4])() = {a, b, nextMenu, ex};
-    GUI g2(4,n,select, "First Menu");
+    GUI g2(4,n,select, "First Menu", green);
     g2.func();
 
 
