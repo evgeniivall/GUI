@@ -2,44 +2,52 @@
 #define GUI_H
 
 #include <iostream>
+
 enum color
 {
+    black = 30,
     red = 31,
-    green = 33,
+    green = 32,
+    yellow = 33,
+    blue = 34,
+    purple = 35,
+    light_blue = 36
 };
 
 class GUI
 {
+
 public:
 
-
-   GUI();
-   GUI(int size, std::string* names, void (*func[])(), std::string head, color Col = red);
-   void func();
-
-
-   ~GUI()
-   {
-        delete [] array;
-        delete [] positionColor;
-   }
+    GUI();
+    GUI(int size, std::string* names, void (*func[])(), std::string head, color color = red);
+    void Show();
+    std::string ColoredOut(std::string text, int type, int color, int bg);
+    ~GUI()
+    {
+        delete [] optionsArray;
+        delete [] optionColor;
+    }
 
 private:
+
     struct options
     {
         void (*p)();
         std::string name;
     };
-    int defCol;
-    bool ifEnter = 0;
-    options* array;
-    int count;
-    int *positionColor;
+
+    int optionsAmount;
+    options* optionsArray;
     std::string Header;
-    void Show();
+    int emphasizingColor;
+
+    bool Enter;
+    int *optionColor;
     int position;
-    std::string output(std::string text, int type, int color, int bg);
-    void navigator();
+
+    void Display();
+    void Navigator();
 };
 
 
