@@ -18,15 +18,15 @@ class GUI
 {
 
 public:
-
+    void (*Show())();
     GUI();
     GUI(int size, std::string* names, void (*func[])(), std::string head, color color = red);
-    void Show();
+    //void Show();
     std::string ColoredOut(std::string text, int type, int color, int bg);
     ~GUI()
     {
-        delete [] optionsArray;
-        delete [] optionColor;
+        delete [] optionsArray_;
+        delete [] optionColor_;
     }
 
 private:
@@ -37,14 +37,14 @@ private:
         std::string name;
     };
 
-    int optionsAmount;
-    options* optionsArray;
-    std::string Header;
-    int emphasizingColor;
+    int optionsAmount_;
+    options* optionsArray_;
+    std::string Header_;
+    int emphasizingColor_;
 
-    bool Enter;
-    int *optionColor;
-    int position;
+    bool enter_;
+    int *optionColor_;
+    int position_;
 
     void Display();
     void Navigator();

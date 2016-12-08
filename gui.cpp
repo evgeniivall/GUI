@@ -1,5 +1,6 @@
 #include "gui.h"
 #include <iostream>
+#define TAB "\t"
 
 #ifdef _WIN32
 #include <conio.h>
@@ -14,18 +15,18 @@
 
 GUI::GUI(int size, std::string* names, void (*func[])(), std::string head, color color)
 {
-    optionsAmount = size;
-    optionsArray = new options[optionsAmount];
-    for(int i = 0; i < optionsAmount; i++)
+    optionsAmount_ = size;
+    optionsArray_ = new options[optionsAmount_];
+    for(int i = 0; i < optionsAmount_; i++)
     {
-        optionsArray[i].p = func[i];
-        optionsArray[i].name = names[i];
+        optionsArray_[i].p = func[i];
+        optionsArray_[i].name = names[i];
     }
-    position = 0;
-    optionColor = new int[optionsAmount];
-    Header = head;
-    emphasizingColor = color;
-    Enter = false;
+    position_ = 0;
+    optionColor_ = new int[optionsAmount_];
+    Header_ = head;
+    emphasizingColor_ = color;
+    enter_ = false;
 }
 
 std::string GUI::ColoredOut(std::string text, int type, int color, int bg)
@@ -55,27 +56,30 @@ std::string GUI::ColoredOut(std::string text, int type, int color, int bg)
     return str;
 }
 
-void GUI::Show()
+//void GUI::Show()
+void (*GUI::Show())()
 {
     Display();
-    optionsArray[position].p();
+    //optionsArray_[position_].p();
+    return (optionsArray_[position_].p);
 
 }
 
 void GUI::Display()
 {
     cls();
-    if(Enter)
+    if(enter_)
         return;
-    std::cout << Header << std::endl;
-    for (int i = 0; i < optionsAmount; i++)
+    //std::cout << TAB << Header_ << std::endl << std::endl;
+    std::cout << TAB << ColoredOut(Header_,1,0,0) << std::endl << std::endl;
+    for (int i = 0; i < optionsAmount_; i++)
     {
-        optionColor[i] = 0;
+        optionColor_[i] = 0;
     }
-    optionColor[position] = emphasizingColor;
-    for (int i = 0; i < optionsAmount; i++)
+    optionColor_[position_] = emphasizingColor_;
+    for (int i = 0; i < optionsAmount_; i++)
     {
-        std::cout << ColoredOut(optionsArray[i].name, 0, optionColor[i], 0);
+        std::cout << TAB << ColoredOut(optionsArray_[i].name, 0, optionColor_[i], 0);
         std::cout << std::endl;
     }
     Navigator();
@@ -97,7 +101,7 @@ void GUI::Navigator()
     tcsetattr( STDIN_FILENO, TCSANOW, &oldt );
 
     if((char)key == '\n')
-        Enter = true;
+        enter_ = true;
     if (key == 27)
     {
         key = getchar();
@@ -108,18 +112,18 @@ void GUI::Navigator()
             {
                 case 'B':
                 {
-                    if (position + 1 < optionsAmount)
-                        ++position;
+                    if (position_ + 1 < optionsAmount_)
+                        ++position_;
                     else
-                        position = 0;
+                        position_ = 0;
                     break;
                 }
                 case 'A':
                 {
-                    if (position - 1 >= 0)
-                        --position;
+                    if (position_ - 1 >= 0)
+                        --position_;
                     else
-                        position = optionsAmount - 1;
+                        position_ = optionsAmount_ - 1;
                     break;
                 }
 
@@ -135,23 +139,23 @@ void GUI::Navigator()
         {
             case 80:
             {
-                if (position + 1 < optionsAmount)
-                    ++position;
+                if (position_ + 1 < optionsAmount_)
+                    ++position_;
                 else
-                    position = 0;
+                    position_ = 0;
                 break;
             }
             case 72:
             {
-                if (position - 1 >= 0)
-                    --position;
+                if (position_ - 1 >= 0)
+                    --position_;
                 else
-                    position = optionsAmount - 1;
+                    position_ = optionsAmount_ - 1;
                 break;
             }
             case 13:
             {
-                Enter = true;
+                enter_ = true;
                 break;
             }
 
